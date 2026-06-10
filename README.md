@@ -4,6 +4,20 @@ World Codex is a system-agnostic Foundry VTT module for a dark fantasy bestiary 
 
 ## Enable the module
 
+## Install from GitHub
+
+Use this manifest URL in **Foundry Setup > Add-on Modules > Install Module**:
+
+```text
+https://github.com/direbun/world-codex/releases/latest/download/module.json
+```
+
+The release manifest downloads the module package from:
+
+```text
+https://github.com/direbun/world-codex/releases/download/v1.0.0/world-codex.zip
+```
+
 1. Start your world.
 2. Open **Game Settings**.
 3. Open **Manage Modules**.
