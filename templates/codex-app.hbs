@@ -1,0 +1,449 @@
+<div class="world-codex-shell">
+  <header class="world-codex-header">
+    <div class="world-codex-title-block">
+      <img class="world-codex-title-icon" src="{{icons.BOOK}}" alt="" />
+      <h1>{{localize "WORLD_CODEX.Title"}}</h1>
+    </div>
+
+    {{#if hasHistory}}
+      <nav class="world-codex-history" aria-label="{{localize "WORLD_CODEX.History"}}">
+        {{#each history}}
+          <button type="button" class="world-codex-history-entry" data-action="select-history" data-history-type="{{type}}" data-entry-id="{{id}}" data-tooltip="{{name}}">
+            <img src="{{image}}" alt="" />
+            <span>{{name}}</span>
+          </button>
+        {{/each}}
+      </nav>
+    {{/if}}
+
+    <div class="world-codex-header-controls">
+      <nav class="world-codex-tabs" aria-label="{{localize "WORLD_CODEX.Title"}}">
+        <button type="button" class="world-codex-tab {{bestiaryTabClass}}" data-action="tab" data-tab="bestiary">
+          <img src="{{icons.BESTIARY}}" alt="" />
+          <span>{{localize "WORLD_CODEX.Bestiary"}}</span>
+        </button>
+        <button type="button" class="world-codex-tab {{recipesTabClass}}" data-action="tab" data-tab="recipes">
+          <img src="{{icons.RECIPE}}" alt="" />
+          <span>{{localize "WORLD_CODEX.Recipes"}}</span>
+        </button>
+      </nav>
+
+      <div class="world-codex-mode-controls">
+        {{#if isGM}}
+          <button type="button" class="world-codex-view-toggle" data-action="toggle-gm-view" data-tooltip="{{viewModeTitle}}">
+            <i class="fa-solid {{viewModeIcon}}"></i>
+            <span>{{viewModeLabel}}</span>
+          </button>
+        {{/if}}
+        <button type="button" class="world-codex-icon-button" data-action="toggle-display-mode" data-tooltip="{{displayModeButtonTitle}}">
+          <i class="fa-solid {{displayModeButtonIcon}}"></i>
+        </button>
+        <button type="button" class="world-codex-icon-button" data-action="close-codex" data-tooltip="{{localize "WORLD_CODEX.Actions.Close"}}">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  {{#if isBestiaryActive}}
+    <section class="world-codex-body world-codex-bestiary-layout">
+      <aside class="world-codex-panel world-codex-left-panel">
+        <div class="world-codex-panel-heading">
+          <h2>{{localize "WORLD_CODEX.Species"}}</h2>
+          {{#if canEdit}}
+            <button type="button" class="world-codex-icon-button" data-action="add-creature" data-tooltip="{{localize "WORLD_CODEX.AddCreature"}}">
+              <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.AddCreature"}}" />
+            </button>
+          {{/if}}
+        </div>
+
+        <div class="world-codex-search-row">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" value="{{bestiarySearch}}" data-search="bestiary" placeholder="{{localize "WORLD_CODEX.SearchBestiary"}}" />
+          {{#if bestiarySearch}}
+            <button type="button" class="world-codex-mini-button" data-action="clear-search" data-tab="bestiary" data-tooltip="{{localize "WORLD_CODEX.Actions.ClearSearch"}}">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          {{/if}}
+        </div>
+
+        <div class="world-codex-list">
+          {{#each speciesGroups}}
+            <section class="world-codex-species-group {{#if isCollapsed}}world-codex-is-collapsed{{/if}}">
+              <button type="button" class="world-codex-species-toggle" data-action="toggle-species" data-species="{{name}}" data-tooltip="{{collapseTitle}}">
+                <i class="fa-solid {{collapseIcon}}"></i>
+                <span>{{name}}</span>
+                <em>{{creatureCount}}</em>
+              </button>
+              {{#unless isCollapsed}}
+                {{#if hasCreatures}}
+                  {{#each creatures}}
+                    <button type="button" class="world-codex-list-entry world-codex-context-target {{#if isSelected}}world-codex-is-selected{{/if}}" data-action="select-creature" data-context-type="creature" data-creature-id="{{id}}">
+                      <img src="{{image}}" alt="" data-action="open-image" data-image-src="{{image}}" data-image-title="{{name}}" />
+                      <span>{{name}}</span>
+                      {{#if @root.canEdit}}<em class="world-codex-visibility-chip {{revealStateClass}}">{{revealStateLabel}}</em>{{/if}}
+                    </button>
+                  {{/each}}
+                {{else}}
+                  <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+                {{/if}}
+              {{/unless}}
+            </section>
+          {{/each}}
+        </div>
+      </aside>
+
+      <main class="world-codex-panel world-codex-main-panel">
+        {{#if hasCreature}}
+          {{#if canEdit}}
+            <div class="world-codex-stage-actions">
+              <div class="world-codex-action-row">
+                <button type="button" class="world-codex-icon-button {{selectedCreature.revealStateClass}}" data-action="toggle-creature" data-tooltip="{{selectedCreature.revealToggleTitle}}">
+                  <img src="{{selectedCreature.revealToggleIcon}}" alt="{{selectedCreature.revealToggleTitle}}" />
+                </button>
+                <button type="button" class="world-codex-icon-button" data-action="edit-creature" data-tooltip="{{localize "WORLD_CODEX.EditCreature"}}">
+                  <img src="{{icons.EDIT}}" alt="{{localize "WORLD_CODEX.EditCreature"}}" />
+                </button>
+                <button type="button" class="world-codex-icon-button world-codex-is-danger" data-action="delete-creature" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+                  <img src="{{icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+                </button>
+              </div>
+            </div>
+          {{/if}}
+
+          <div class="world-codex-creature-art">
+            <img src="{{selectedCreature.image}}" alt="{{selectedCreature.name}}" data-action="open-image" data-image-src="{{selectedCreature.image}}" data-image-title="{{selectedCreature.name}}" />
+          </div>
+
+          {{#if selectedCreature.hasSystemDetails}}
+            <section class="world-codex-system-details world-codex-system-stage">
+              <div class="world-codex-section-heading">
+                <i class="fa-solid fa-database"></i>
+                <h3>{{selectedCreature.systemProfileData.profileLabel}}</h3>
+              </div>
+              <div class="world-codex-system-section-list">
+                {{#each selectedCreature.systemProfileData.sections}}
+                  <article class="world-codex-system-section {{revealStateClass}}">
+                    <header>
+                      <strong>{{label}}</strong>
+                      {{#if @root.canEdit}}
+                        <span class="world-codex-reveal-count">{{revealSummary.text}}</span>
+                        <button type="button" class="world-codex-mini-button" data-action="toggle-system-section" data-section-id="{{id}}" data-tooltip="{{toggleTitle}}">
+                          <img src="{{toggleIcon}}" alt="{{toggleTitle}}" />
+                        </button>
+                      {{/if}}
+                    </header>
+                    <div class="world-codex-system-card-grid">
+                      {{#each rows}}
+                        <article class="world-codex-system-card world-codex-system-card-{{kind}} {{revealStateClass}} {{#if hidden}}world-codex-is-hidden{{/if}}" data-tooltip="{{tooltipText}}">
+                          <div class="world-codex-system-card-icon-wrap">
+                            <img class="world-codex-system-card-icon" src="{{tileImage}}" alt="" />
+                            {{#if hasAffinityState}}
+                              {{#unless showAffinityIconValue}}
+                                <img class="world-codex-affinity-state-icon world-codex-affinity-state-{{affinityState}}" src="{{affinityStateIcon}}" alt="{{affinityStateLabel}}" data-tooltip="{{affinityStateLabel}}" />
+                              {{/unless}}
+                            {{/if}}
+                          </div>
+                          <span>{{label}}</span>
+                          {{#if showAffinityIconValue}}
+                            <img class="world-codex-affinity-value-icon world-codex-affinity-state-{{affinityState}}" src="{{affinityStateIcon}}" alt="{{affinityStateLabel}}" data-tooltip="{{affinityStateLabel}}" />
+                          {{else}}
+                            {{#if displayValue}}<strong>{{displayValue}}</strong>{{/if}}
+                          {{/if}}
+                          {{#if @root.canEdit}}
+                            <button type="button" class="world-codex-mini-button" data-action="toggle-system-row" data-section-id="{{sectionId}}" data-row-id="{{id}}" data-tooltip="{{toggleTitle}}">
+                              <img src="{{toggleIcon}}" alt="{{toggleTitle}}" />
+                            </button>
+                          {{/if}}
+                        </article>
+                      {{/each}}
+                    </div>
+                  </article>
+                {{/each}}
+              </div>
+            </section>
+          {{/if}}
+
+          <section class="world-codex-section">
+            <div class="world-codex-section-heading">
+              <img src="{{icons.LOOT}}" alt="" />
+              <h3>{{localize "WORLD_CODEX.Loot"}}</h3>
+              {{#if canEdit}}
+                <div class="world-codex-reveal-controls">
+                  <span>{{selectedCreature.lootReveal.text}}</span>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="loot" data-revealed="true" data-tooltip="{{localize "WORLD_CODEX.Actions.RevealSection"}}">
+                    <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.RevealSection"}}" />
+                  </button>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="loot" data-revealed="false" data-tooltip="{{localize "WORLD_CODEX.Actions.HideSection"}}">
+                    <img src="{{icons.EYE_CLOSED}}" alt="{{localize "WORLD_CODEX.Actions.HideSection"}}" />
+                  </button>
+                </div>
+              {{/if}}
+            </div>
+            {{#if selectedCreature.hasLoot}}
+              <div class="world-codex-tile-grid">
+                {{#each selectedCreature.loot}}
+                  <article class="world-codex-tile world-codex-context-target {{#if hidden}}world-codex-is-hidden{{/if}}" data-tooltip="{{tooltipText}}" data-context-type="loot" data-collection="loot" data-item-id="{{id}}">
+                    <img class="world-codex-tile-image" src="{{tileImage}}" alt="{{displayName}}" data-action="open-image" data-image-src="{{tileImage}}" data-image-title="{{displayName}}" />
+                    <strong>{{displayName}}</strong>
+                    {{#if @root.canEdit}}
+                      <span class="world-codex-visibility-chip {{revealStateClass}}">{{revealStateLabel}}</span>
+                      <div class="world-codex-tile-actions">
+                        <button type="button" class="world-codex-mini-button" data-action="toggle-creature-item" data-collection="loot" data-item-id="{{id}}" data-tooltip="{{toggleTitle}}">
+                          <img src="{{toggleIcon}}" alt="{{toggleTitle}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button" data-action="edit-creature-item" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Edit"}}">
+                          <img src="{{@root.icons.EDIT}}" alt="{{localize "WORLD_CODEX.Edit"}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-creature-item" data-collection="loot" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+                          <img src="{{@root.icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+                        </button>
+                      </div>
+                    {{/if}}
+                  </article>
+                {{/each}}
+              </div>
+            {{else}}
+              <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+            {{/if}}
+          </section>
+        {{else}}
+          <div class="world-codex-empty-state">
+            <img src="{{paths.DEFAULT_CREATURE}}" alt="" />
+            <p>{{localize "WORLD_CODEX.NoCreatureSelected"}}</p>
+          </div>
+        {{/if}}
+      </main>
+
+      <aside class="world-codex-panel world-codex-right-panel">
+        {{#if hasCreature}}
+          <section class="world-codex-lore-block">
+            <p class="world-codex-kicker">{{selectedCreature.species}}</p>
+            <h2>{{selectedCreature.name}}</h2>
+            {{#if canEdit}}
+              <span class="world-codex-visibility-chip {{selectedCreature.revealStateClass}}">{{selectedCreature.revealStateLabel}}</span>
+            {{/if}}
+            <article class="world-codex-description">
+              {{{selectedCreature.description}}}
+            </article>
+            {{#if canEdit}}
+              {{#if selectedCreature.gmNotes}}
+                <details class="world-codex-gm-notes">
+                  <summary>{{localize "WORLD_CODEX.GmNotes"}}</summary>
+                  <p>{{selectedCreature.gmNotes}}</p>
+                </details>
+              {{/if}}
+            {{/if}}
+          </section>
+
+          <section class="world-codex-section">
+            <div class="world-codex-section-heading">
+              <img src="{{icons.WEAKNESS}}" alt="" />
+              <h3>{{localize "WORLD_CODEX.Weaknesses"}}</h3>
+              {{#if canEdit}}
+                <div class="world-codex-reveal-controls">
+                  <span>{{selectedCreature.weaknessReveal.text}}</span>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="weakness" data-revealed="true" data-tooltip="{{localize "WORLD_CODEX.Actions.RevealSection"}}">
+                    <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.RevealSection"}}" />
+                  </button>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="weakness" data-revealed="false" data-tooltip="{{localize "WORLD_CODEX.Actions.HideSection"}}">
+                    <img src="{{icons.EYE_CLOSED}}" alt="{{localize "WORLD_CODEX.Actions.HideSection"}}" />
+                  </button>
+                </div>
+              {{/if}}
+            </div>
+            {{#if selectedCreature.hasWeaknesses}}
+              <div class="world-codex-detail-list">
+                {{#each selectedCreature.weaknesses}}
+                  <article class="world-codex-detail-tile world-codex-context-target {{#if hidden}}world-codex-is-hidden{{/if}}" data-tooltip="{{tooltipText}}" data-context-type="trait" data-collection="traits" data-item-id="{{id}}">
+                    <img src="{{tileImage}}" alt="{{displayName}}" data-action="open-image" data-image-src="{{tileImage}}" data-image-title="{{displayName}}" />
+                    <div>
+                      <strong>{{displayName}}</strong>
+                    </div>
+                    {{#if @root.canEdit}}
+                      <span class="world-codex-visibility-chip {{revealStateClass}}">{{revealStateLabel}}</span>
+                      <div class="world-codex-tile-actions">
+                        <button type="button" class="world-codex-mini-button" data-action="toggle-creature-item" data-collection="traits" data-item-id="{{id}}" data-tooltip="{{toggleTitle}}">
+                          <img src="{{toggleIcon}}" alt="{{toggleTitle}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button" data-action="edit-creature-item" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Edit"}}">
+                          <img src="{{@root.icons.EDIT}}" alt="{{localize "WORLD_CODEX.Edit"}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-creature-item" data-collection="traits" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+                          <img src="{{@root.icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+                        </button>
+                      </div>
+                    {{/if}}
+                  </article>
+                {{/each}}
+              </div>
+            {{else}}
+              <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+            {{/if}}
+          </section>
+
+          <section class="world-codex-section">
+            <div class="world-codex-section-heading">
+              <img src="{{icons.STRENGTH}}" alt="" />
+              <h3>{{localize "WORLD_CODEX.Strengths"}}</h3>
+              {{#if canEdit}}
+                <div class="world-codex-reveal-controls">
+                  <span>{{selectedCreature.strengthReveal.text}}</span>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="strength" data-revealed="true" data-tooltip="{{localize "WORLD_CODEX.Actions.RevealSection"}}">
+                    <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.RevealSection"}}" />
+                  </button>
+                  <button type="button" class="world-codex-mini-button" data-action="set-creature-section" data-section="strength" data-revealed="false" data-tooltip="{{localize "WORLD_CODEX.Actions.HideSection"}}">
+                    <img src="{{icons.EYE_CLOSED}}" alt="{{localize "WORLD_CODEX.Actions.HideSection"}}" />
+                  </button>
+                </div>
+              {{/if}}
+            </div>
+            {{#if selectedCreature.hasStrengths}}
+              <div class="world-codex-detail-list">
+                {{#each selectedCreature.strengths}}
+                  <article class="world-codex-detail-tile world-codex-context-target {{#if hidden}}world-codex-is-hidden{{/if}}" data-tooltip="{{tooltipText}}" data-context-type="trait" data-collection="traits" data-item-id="{{id}}">
+                    <img src="{{tileImage}}" alt="{{displayName}}" data-action="open-image" data-image-src="{{tileImage}}" data-image-title="{{displayName}}" />
+                    <div>
+                      <strong>{{displayName}}</strong>
+                    </div>
+                    {{#if @root.canEdit}}
+                      <span class="world-codex-visibility-chip {{revealStateClass}}">{{revealStateLabel}}</span>
+                      <div class="world-codex-tile-actions">
+                        <button type="button" class="world-codex-mini-button" data-action="toggle-creature-item" data-collection="traits" data-item-id="{{id}}" data-tooltip="{{toggleTitle}}">
+                          <img src="{{toggleIcon}}" alt="{{toggleTitle}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button" data-action="edit-creature-item" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Edit"}}">
+                          <img src="{{@root.icons.EDIT}}" alt="{{localize "WORLD_CODEX.Edit"}}" />
+                        </button>
+                        <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-creature-item" data-collection="traits" data-item-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+                          <img src="{{@root.icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+                        </button>
+                      </div>
+                    {{/if}}
+                  </article>
+                {{/each}}
+              </div>
+            {{else}}
+              <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+            {{/if}}
+          </section>
+        {{/if}}
+      </aside>
+    </section>
+  {{/if}}
+
+  {{#if isRecipesActive}}
+    <section class="world-codex-body world-codex-recipes-layout">
+      <aside class="world-codex-panel world-codex-left-panel">
+        <div class="world-codex-panel-heading">
+          <h2>{{localize "WORLD_CODEX.Recipes"}}</h2>
+          {{#if canEdit}}
+            <button type="button" class="world-codex-icon-button" data-action="add-recipe" data-tooltip="{{localize "WORLD_CODEX.AddRecipe"}}">
+              <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.AddRecipe"}}" />
+            </button>
+          {{/if}}
+        </div>
+
+        <div class="world-codex-search-row">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" value="{{recipesSearch}}" data-search="recipes" placeholder="{{localize "WORLD_CODEX.SearchRecipes"}}" />
+          {{#if recipesSearch}}
+            <button type="button" class="world-codex-mini-button" data-action="clear-search" data-tab="recipes" data-tooltip="{{localize "WORLD_CODEX.Actions.ClearSearch"}}">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          {{/if}}
+        </div>
+
+        <div class="world-codex-list">
+          {{#each recipeGroups}}
+            <section class="world-codex-species-group">
+              <h3>{{name}}</h3>
+              {{#if hasRecipes}}
+                {{#each recipes}}
+                  <button type="button" class="world-codex-list-entry world-codex-context-target {{#if isSelected}}world-codex-is-selected{{/if}}" data-action="select-recipe" data-context-type="recipe" data-recipe-id="{{id}}">
+                    <img src="{{image}}" alt="" data-action="open-image" data-image-src="{{image}}" data-image-title="{{name}}" />
+                    <span>{{name}}</span>
+                    {{#unless revealed}}<em>{{localize "WORLD_CODEX.Hidden"}}</em>{{/unless}}
+                  </button>
+                {{/each}}
+              {{else}}
+                <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+              {{/if}}
+            </section>
+          {{/each}}
+        </div>
+      </aside>
+
+      <main class="world-codex-panel world-codex-main-panel world-codex-recipe-main">
+        {{#if hasRecipe}}
+          <div class="world-codex-main-heading">
+            <div>
+              <p class="world-codex-kicker">{{selectedRecipe.category}}</p>
+              <h2>{{selectedRecipe.name}}</h2>
+            </div>
+            {{#if canEdit}}
+              <div class="world-codex-action-row">
+                <button type="button" class="world-codex-icon-button" data-action="edit-recipe" data-tooltip="{{localize "WORLD_CODEX.EditRecipe"}}">
+                  <img src="{{icons.EDIT}}" alt="{{localize "WORLD_CODEX.EditRecipe"}}" />
+                </button>
+                <button type="button" class="world-codex-icon-button world-codex-is-danger" data-action="delete-recipe" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+                  <img src="{{icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+                </button>
+              </div>
+            {{/if}}
+          </div>
+
+          <div class="world-codex-recipe-grid">
+            <div>
+              <div class="world-codex-creature-art world-codex-recipe-art">
+                <img src="{{selectedRecipe.image}}" alt="{{selectedRecipe.name}}" data-action="open-image" data-image-src="{{selectedRecipe.image}}" data-image-title="{{selectedRecipe.name}}" />
+              </div>
+              <article class="world-codex-description">
+                {{{selectedRecipe.description}}}
+              </article>
+            </div>
+
+            <aside class="world-codex-recipe-side">
+              <section class="world-codex-section">
+                <div class="world-codex-section-heading">
+                  <img src="{{icons.RECIPE}}" alt="" />
+                  <h3>{{localize "WORLD_CODEX.Ingredients"}}</h3>
+                </div>
+                {{#if selectedRecipe.hasIngredients}}
+                  <div class="world-codex-tile-grid">
+                    {{#each selectedRecipe.ingredients}}
+                      <article class="world-codex-tile" data-tooltip="{{tooltipText}}">
+                        <img class="world-codex-tile-image" src="{{tileImage}}" alt="{{displayName}}" data-action="open-image" data-image-src="{{tileImage}}" data-image-title="{{displayName}}" />
+                        <strong>{{displayName}}</strong>
+                        {{#if quantity}}<span>{{quantity}}</span>{{/if}}
+                      </article>
+                    {{/each}}
+                  </div>
+                {{else}}
+                  <p class="world-codex-empty-small">{{localize "WORLD_CODEX.NoEntries"}}</p>
+                {{/if}}
+              </section>
+
+              <section class="world-codex-section">
+                <div class="world-codex-section-heading">
+                  <img src="{{icons.LOOT}}" alt="" />
+                  <h3>{{localize "WORLD_CODEX.Result"}}</h3>
+                </div>
+                <article class="world-codex-result-tile">
+                  <img src="{{selectedRecipe.result.tileImage}}" alt="{{selectedRecipe.result.name}}" data-action="open-image" data-image-src="{{selectedRecipe.result.tileImage}}" data-image-title="{{selectedRecipe.result.name}}" />
+                  <strong>{{selectedRecipe.result.name}}</strong>
+                  {{#if selectedRecipe.result.description}}<p>{{selectedRecipe.result.description}}</p>{{/if}}
+                </article>
+              </section>
+            </aside>
+          </div>
+        {{else}}
+          <div class="world-codex-empty-state">
+            <img src="{{paths.DEFAULT_RECIPE}}" alt="" />
+            <p>{{localize "WORLD_CODEX.NoRecipeSelected"}}</p>
+          </div>
+        {{/if}}
+      </main>
+    </section>
+  {{/if}}
+</div>

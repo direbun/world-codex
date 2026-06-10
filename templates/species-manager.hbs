@@ -1,0 +1,27 @@
+<form class="world-codex-editor-form world-codex-species-form">
+  <header class="world-codex-editor-header">
+    <h2>{{localize "WORLD_CODEX.ConfigureSpecies"}}</h2>
+    <div class="world-codex-action-row">
+      <button type="button" class="world-codex-button" data-action="add-species">{{localize "WORLD_CODEX.Actions.AddSpecies"}}</button>
+      <button type="submit" class="world-codex-button">{{localize "WORLD_CODEX.Save"}}</button>
+    </div>
+  </header>
+
+  <section class="world-codex-editor-section">
+    {{#each species}}
+      <div class="world-codex-species-row">
+        <div class="world-codex-reorder-buttons">
+          <button type="button" class="world-codex-mini-button" data-action="move-up" data-row-id="{{id}}" {{#unless canMoveUp}}disabled{{/unless}}>^</button>
+          <button type="button" class="world-codex-mini-button" data-action="move-down" data-row-id="{{id}}" {{#unless canMoveDown}}disabled{{/unless}}>v</button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Species"}}</span>
+          <input type="text" name="species.{{id}}.name" value="{{name}}" />
+        </label>
+        <button type="button" class="world-codex-icon-button world-codex-is-danger" data-action="delete-species" data-row-id="{{id}}" data-tooltip="{{localize "WORLD_CODEX.Delete"}}">
+          <img src="{{../icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+        </button>
+      </div>
+    {{/each}}
+  </section>
+</form>

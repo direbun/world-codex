@@ -1,0 +1,31 @@
+{
+  "id": "world-codex",
+  "title": "World Codex",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "World Codex"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/world-codex.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "flags": {
+    "canUpload": true
+  },
+  "description": "A system-agnostic dark fantasy codex for bestiary entries and recipes."
+}

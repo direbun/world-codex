@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Default creature">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#5c4a25"/>
+      <stop offset="68%" stop-color="#17130f"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#glow)"/>
+  <path d="M62 196c18-34 18-72 6-108 20 17 34 37 42 60 4-38 20-71 49-98-3 38 4 71 24 99 6-24 16-45 31-63 0 40-8 77-24 110-28 18-85 24-128 0Z" fill="#050505" stroke="#c9a44d" stroke-opacity=".42" stroke-width="5"/>
+  <path d="M93 111c7 7 16 12 27 15m45-15c-8 7-17 12-28 15" fill="none" stroke="#c9a44d" stroke-linecap="round" stroke-width="6"/>
+  <path d="M108 159c15 8 31 8 48 0" fill="none" stroke="#6f5b30" stroke-linecap="round" stroke-width="5"/>
+</svg>

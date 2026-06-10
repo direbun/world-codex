@@ -1,0 +1,112 @@
+<form class="world-codex-editor-form">
+  <header class="world-codex-editor-header">
+    <h2>{{#if isNew}}{{localize "WORLD_CODEX.AddRecipe"}}{{else}}{{localize "WORLD_CODEX.EditRecipe"}}{{/if}}</h2>
+    <div class="world-codex-action-row">
+      {{#unless isNew}}
+        <button type="button" class="world-codex-button world-codex-is-danger" data-action="delete-recipe">{{localize "WORLD_CODEX.Delete"}}</button>
+      {{/unless}}
+      <button type="submit" class="world-codex-button">{{localize "WORLD_CODEX.Save"}}</button>
+    </div>
+  </header>
+
+  <section class="world-codex-editor-section">
+    <label>
+      <span>{{localize "WORLD_CODEX.Name"}}</span>
+      <input type="text" name="name" value="{{recipe.name}}" />
+    </label>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.Category"}}</span>
+      <input type="text" name="category" value="{{recipe.category}}" />
+    </label>
+
+    <div class="world-codex-field-row">
+      <img class="world-codex-image-preview" src="{{recipe.image}}" alt="" />
+      <label>
+        <span>{{localize "WORLD_CODEX.Image"}}</span>
+        <input type="text" name="image" value="{{recipe.image}}" />
+      </label>
+      <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="image" data-tooltip="{{localize "WORLD_CODEX.Actions.PickImage"}}">
+        <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+      </button>
+    </div>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.Description"}}</span>
+      <textarea name="description" rows="5">{{recipe.description}}</textarea>
+    </label>
+
+    <label class="world-codex-toggle">
+      <input type="checkbox" name="revealed" {{#if recipe.revealed}}checked{{/if}} />
+      <span>{{localize "WORLD_CODEX.Revealed"}}</span>
+    </label>
+  </section>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <img src="{{icons.RECIPE}}" alt="" />
+      <h3>{{localize "WORLD_CODEX.Ingredients"}}</h3>
+      <button type="button" class="world-codex-icon-button" data-action="add-ingredient" data-tooltip="{{localize "WORLD_CODEX.Actions.AddIngredient"}}">
+        <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.Actions.AddIngredient"}}" />
+      </button>
+    </div>
+
+    {{#each ingredients}}
+      <article class="world-codex-nested-editor">
+        <div class="world-codex-nested-heading">
+          <strong>{{localize "WORLD_CODEX.Ingredients"}}</strong>
+          <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-ingredient" data-item-id="{{id}}">
+            <img src="{{../icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Name"}}</span>
+          <input type="text" name="ingredients.{{id}}.name" value="{{name}}" />
+        </label>
+        <label>
+          <span>{{localize "WORLD_CODEX.Quantity"}}</span>
+          <input type="text" name="ingredients.{{id}}.quantity" value="{{quantity}}" />
+        </label>
+        <div class="world-codex-field-row">
+          <img class="world-codex-image-preview" src="{{image}}" alt="" />
+          <label>
+            <span>{{localize "WORLD_CODEX.Image"}}</span>
+            <input type="text" name="ingredients.{{id}}.image" value="{{image}}" />
+          </label>
+          <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="ingredients.{{id}}.image">
+            <img src="{{../icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Description"}}</span>
+          <textarea name="ingredients.{{id}}.description" rows="3">{{description}}</textarea>
+        </label>
+      </article>
+    {{/each}}
+  </section>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <img src="{{icons.LOOT}}" alt="" />
+      <h3>{{localize "WORLD_CODEX.Result"}}</h3>
+    </div>
+    <label>
+      <span>{{localize "WORLD_CODEX.Name"}}</span>
+      <input type="text" name="result.name" value="{{recipe.result.name}}" />
+    </label>
+    <div class="world-codex-field-row">
+      <img class="world-codex-image-preview" src="{{recipe.result.image}}" alt="" />
+      <label>
+        <span>{{localize "WORLD_CODEX.Image"}}</span>
+        <input type="text" name="result.image" value="{{recipe.result.image}}" />
+      </label>
+      <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="result.image">
+        <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+      </button>
+    </div>
+    <label>
+      <span>{{localize "WORLD_CODEX.Description"}}</span>
+      <textarea name="result.description" rows="3">{{recipe.result.description}}</textarea>
+    </label>
+  </section>
+</form>

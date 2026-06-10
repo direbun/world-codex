@@ -1,0 +1,1417 @@
+.world-codex-window {
+  --wc-bg: #0b0a08;
+  --wc-panel: rgba(25, 22, 18, 0.92);
+  --wc-gold: #c9a44d;
+  --wc-muted: #a79d8a;
+  --wc-danger: #b94a48;
+  --wc-border: rgba(201, 164, 77, 0.38);
+  --wc-ink: #f0e7d2;
+  --wc-soft: rgba(255, 255, 255, 0.06);
+  --wc-smoke: rgba(0, 0, 0, 0.34);
+}
+
+.world-codex-window .window-content {
+  background:
+    linear-gradient(90deg, rgba(8, 13, 15, 0.96), rgba(18, 16, 14, 0.88) 34%, rgba(7, 7, 7, 0.96)),
+    repeating-linear-gradient(90deg, rgba(120, 150, 160, 0.09) 0 2px, transparent 2px 92px),
+    linear-gradient(180deg, #090b0c, var(--wc-bg) 64%, #080504);
+  color: var(--wc-ink);
+  padding: 0;
+  overflow: hidden;
+}
+
+.world-codex-shell {
+  height: 100%;
+  min-height: 620px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 16%, rgba(0, 0, 0, 0.42));
+}
+
+.world-codex-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 92px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--wc-border);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.18));
+}
+
+.world-codex-title-block,
+.world-codex-header-controls,
+.world-codex-tabs,
+.world-codex-mode-controls,
+.world-codex-main-heading,
+.world-codex-panel-heading,
+.world-codex-section-heading,
+.world-codex-action-row,
+.world-codex-field-row,
+.world-codex-nested-heading {
+  display: flex;
+  align-items: center;
+}
+
+.world-codex-title-block {
+  gap: 10px;
+}
+
+.world-codex-history {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin-left: 18px;
+  overflow: hidden;
+}
+
+.world-codex-history-entry {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(201, 164, 77, 0.22);
+  background: rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+.world-codex-history-entry:hover {
+  border-color: var(--wc-gold);
+}
+
+.world-codex-history-entry img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+}
+
+.world-codex-history-entry span {
+  display: none;
+}
+
+.world-codex-title-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.world-codex-window h1,
+.world-codex-window h2,
+.world-codex-window h3 {
+  margin: 0;
+  color: var(--wc-gold);
+  letter-spacing: 0;
+  border: 0;
+}
+
+.world-codex-window h1 {
+  font-size: 24px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.world-codex-window h2 {
+  font-size: 23px;
+  line-height: 1.15;
+}
+
+.world-codex-window h3 {
+  font-size: 13px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.world-codex-tabs {
+  gap: 8px;
+}
+
+.world-codex-header-controls {
+  gap: 12px;
+  margin-left: auto;
+}
+
+.world-codex-mode-controls {
+  gap: 6px;
+}
+
+.world-codex-mode-controls .world-codex-icon-button i {
+  color: var(--wc-gold);
+  font-size: 15px;
+}
+
+.world-codex-view-toggle {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  color: var(--wc-gold);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.world-codex-player-preview .world-codex-view-toggle {
+  border-color: rgba(201, 164, 77, 0.78);
+  background: rgba(92, 70, 34, 0.58);
+}
+
+.world-codex-tab,
+.world-codex-button,
+.world-codex-view-toggle,
+.world-codex-icon-button,
+.world-codex-mini-button,
+.world-codex-list-entry {
+  border: 1px solid var(--wc-border);
+  color: var(--wc-ink);
+  background: rgba(20, 18, 15, 0.86);
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.world-codex-tab:hover,
+.world-codex-button:hover,
+.world-codex-view-toggle:hover,
+.world-codex-icon-button:hover,
+.world-codex-mini-button:hover,
+.world-codex-list-entry:hover {
+  border-color: var(--wc-gold);
+  background: rgba(63, 49, 28, 0.75);
+}
+
+.world-codex-view-toggle {
+  color: var(--wc-gold);
+}
+
+.world-codex-tab {
+  min-width: 132px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.world-codex-tab img,
+.world-codex-icon-button img,
+.world-codex-mini-button img,
+.world-codex-section-heading img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.world-codex-tab.world-codex-is-active {
+  border-color: var(--wc-gold);
+  box-shadow: inset 0 -2px 0 var(--wc-gold);
+  background: rgba(91, 67, 31, 0.72);
+}
+
+.world-codex-body {
+  min-height: 0;
+  padding: 18px 28px 26px;
+  gap: 22px;
+}
+
+.world-codex-bestiary-layout {
+  display: grid;
+  grid-template-columns: 360px minmax(520px, 1fr) 390px;
+}
+
+.world-codex-recipes-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.world-codex-panel {
+  min-height: 0;
+  min-width: 0;
+  border: 1px solid rgba(201, 164, 77, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 170px),
+    rgba(8, 10, 10, 0.54);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+.world-codex-left-panel,
+.world-codex-right-panel {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.world-codex-left-panel {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.world-codex-main-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 14px 18px 18px;
+  border-color: rgba(201, 164, 77, 0.18);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.24)),
+    rgba(7, 6, 5, 0.18);
+  overflow: auto;
+}
+
+.world-codex-main-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.44), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.46)),
+    linear-gradient(180deg, rgba(201, 164, 77, 0.04), transparent 34%, rgba(0, 0, 0, 0.28));
+  filter: none;
+  pointer-events: none;
+}
+
+.world-codex-main-panel > * {
+  position: relative;
+}
+
+.world-codex-panel-heading {
+  justify-content: space-between;
+  gap: 10px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--wc-border);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.world-codex-search-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 20px;
+  border-bottom: 1px solid rgba(201, 164, 77, 0.10);
+  color: var(--wc-muted);
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.world-codex-search-row input[type="search"] {
+  width: 100%;
+  height: 28px;
+  border: 1px solid rgba(201, 164, 77, 0.18);
+  color: var(--wc-ink);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.world-codex-search-row .world-codex-mini-button {
+  width: 24px;
+  height: 24px;
+}
+
+.world-codex-list {
+  overflow: auto;
+  padding: 12px 18px 18px;
+}
+
+.world-codex-species-group {
+  padding: 10px 0 16px;
+  border-bottom: 1px solid rgba(201, 164, 77, 0.16);
+}
+
+.world-codex-species-group:last-child {
+  border-bottom: 0;
+}
+
+.world-codex-species-toggle {
+  width: 100%;
+  min-height: 26px;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  color: var(--wc-muted);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.world-codex-species-toggle:hover {
+  color: var(--wc-gold);
+}
+
+.world-codex-species-toggle i {
+  color: var(--wc-gold);
+  font-size: 11px;
+}
+
+.world-codex-species-toggle span {
+  color: var(--wc-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.world-codex-species-toggle em {
+  min-width: 18px;
+  padding: 1px 5px;
+  border: 1px solid rgba(201, 164, 77, 0.16);
+  color: rgba(167, 157, 138, 0.72);
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 10px;
+  font-style: normal;
+  text-align: center;
+}
+
+.world-codex-species-group.world-codex-is-collapsed {
+  padding-bottom: 8px;
+}
+
+.world-codex-list-entry {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+  padding: 5px 8px;
+  text-align: left;
+  background: rgba(5, 8, 9, 0.25);
+  border-color: transparent;
+  border-bottom-color: rgba(201, 164, 77, 0.14);
+}
+
+.world-codex-list-entry.world-codex-is-selected {
+  border-color: var(--wc-gold);
+  background: rgba(37, 43, 42, 0.70);
+  box-shadow: inset 0 0 0 2px rgba(201, 164, 77, 0.34);
+}
+
+.world-codex-list-entry img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid rgba(201, 164, 77, 0.26);
+  background: rgba(0, 0, 0, 0.34);
+}
+
+.world-codex-list-entry img[data-action="open-image"],
+.world-codex-creature-art img[data-action="open-image"],
+.world-codex-tile img[data-action="open-image"],
+.world-codex-detail-tile img[data-action="open-image"],
+.world-codex-result-tile img[data-action="open-image"] {
+  cursor: zoom-in;
+}
+
+.world-codex-list-entry span {
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  color: #e8dfcf;
+}
+
+.world-codex-list-entry em {
+  color: var(--wc-muted);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.world-codex-visibility-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 18px;
+  padding: 1px 6px;
+  border: 1px solid rgba(201, 164, 77, 0.22);
+  color: var(--wc-muted);
+  background: rgba(0, 0, 0, 0.24);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.world-codex-visibility-chip.world-codex-is-revealed,
+.world-codex-icon-button.world-codex-is-revealed {
+  border-color: rgba(106, 151, 83, 0.72);
+  color: #b8d89c;
+}
+
+.world-codex-visibility-chip.world-codex-is-unrevealed,
+.world-codex-icon-button.world-codex-is-unrevealed {
+  border-color: rgba(185, 74, 72, 0.72);
+  color: #d99a90;
+}
+
+.world-codex-main-heading {
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--wc-border);
+}
+
+.world-codex-kicker {
+  margin: 0 0 4px;
+  color: var(--wc-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.world-codex-action-row {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.world-codex-icon-button,
+.world-codex-mini-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.world-codex-icon-button {
+  width: 32px;
+  height: 32px;
+}
+
+.world-codex-mini-button {
+  width: 26px;
+  height: 26px;
+}
+
+.world-codex-button {
+  min-height: 32px;
+  padding: 0 12px;
+  font-weight: 600;
+}
+
+.world-codex-icon-button.world-codex-is-danger,
+.world-codex-mini-button.world-codex-is-danger,
+.world-codex-button.world-codex-is-danger {
+  border-color: rgba(185, 74, 72, 0.72);
+}
+
+.world-codex-icon-button.world-codex-is-danger:hover,
+.world-codex-mini-button.world-codex-is-danger:hover,
+.world-codex-button.world-codex-is-danger:hover {
+  border-color: var(--wc-danger);
+  background: rgba(82, 24, 24, 0.72);
+}
+
+.world-codex-creature-art {
+  width: 100%;
+  min-height: 470px;
+  max-height: 610px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background:
+    linear-gradient(180deg, rgba(190, 205, 205, 0.08), rgba(0, 0, 0, 0.10)),
+    rgba(0, 0, 0, 0.08);
+}
+
+.world-codex-creature-art img {
+  width: 100%;
+  height: 100%;
+  max-height: 590px;
+  object-fit: contain;
+  padding: 18px;
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.72));
+}
+
+.world-codex-description {
+  color: #e5dcc8;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-description p:first-child {
+  margin-top: 0;
+}
+
+.world-codex-gm-notes {
+  border: 1px solid rgba(201, 164, 77, 0.2);
+  padding: 10px 12px;
+  color: var(--wc-muted);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.world-codex-editor-note {
+  align-self: center;
+  color: var(--wc-muted);
+  font-size: 12px;
+}
+
+.world-codex-section {
+  display: grid;
+  gap: 10px;
+}
+
+.world-codex-section + .world-codex-section {
+  margin-top: 18px;
+}
+
+.world-codex-section-heading {
+  gap: 8px;
+  min-height: 28px;
+  color: var(--wc-gold);
+}
+
+.world-codex-section-heading .world-codex-icon-button {
+  margin-left: auto;
+}
+
+.world-codex-reveal-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.world-codex-reveal-controls span {
+  color: rgba(167, 157, 138, 0.78);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.world-codex-system-section-list {
+  display: grid;
+  gap: 8px;
+}
+
+.world-codex-system-section {
+  display: grid;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid rgba(201, 164, 77, 0.18);
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.world-codex-system-section.world-codex-is-unrevealed {
+  border-color: rgba(185, 74, 72, 0.35);
+}
+
+.world-codex-system-section header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.world-codex-system-section header > strong {
+  flex: 1;
+  color: var(--wc-gold);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.world-codex-system-row-list {
+  display: grid;
+  gap: 5px;
+}
+
+.world-codex-system-row {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.8fr) minmax(0, 1.2fr);
+  gap: 8px;
+  align-items: start;
+  padding: 4px 0;
+  border-top: 1px solid rgba(201, 164, 77, 0.08);
+}
+
+.world-codex-system-row span {
+  color: var(--wc-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.world-codex-system-row strong {
+  color: var(--wc-ink);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-system-row p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: rgba(230, 220, 200, 0.76);
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(82px, 92px));
+  gap: 14px;
+}
+
+.world-codex-tile {
+  position: relative;
+  min-height: 112px;
+  display: grid;
+  grid-template-rows: 58px auto;
+  align-items: center;
+  justify-items: center;
+  gap: 7px;
+  padding: 10px 8px 8px;
+  border: 1px solid rgba(201, 164, 77, 0.24);
+  background: rgba(7, 10, 11, 0.42);
+  text-align: center;
+}
+
+.world-codex-tile strong,
+.world-codex-detail-tile strong,
+.world-codex-result-tile strong {
+  color: var(--wc-ink);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-tile span,
+.world-codex-result-tile p {
+  color: var(--wc-muted);
+  font-size: 12px;
+}
+
+.world-codex-tile .world-codex-visibility-chip,
+.world-codex-detail-tile .world-codex-visibility-chip {
+  color: var(--wc-muted);
+  font-size: 10px;
+}
+
+.world-codex-tile .world-codex-visibility-chip.world-codex-is-revealed,
+.world-codex-detail-tile .world-codex-visibility-chip.world-codex-is-revealed {
+  color: #b8d89c;
+}
+
+.world-codex-tile .world-codex-visibility-chip.world-codex-is-unrevealed,
+.world-codex-detail-tile .world-codex-visibility-chip.world-codex-is-unrevealed {
+  color: #d99a90;
+}
+
+.world-codex-tile-image {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.world-codex-tile.world-codex-is-hidden,
+.world-codex-detail-tile.world-codex-is-hidden {
+  filter: grayscale(0.95);
+  opacity: 0.72;
+  background: rgba(80, 80, 80, 0.12);
+}
+
+.world-codex-tile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.world-codex-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding: 72px 28px 24px;
+  border-color: rgba(201, 164, 77, 0.14);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.10), rgba(7, 6, 5, 0.58));
+  overflow: auto;
+}
+
+.world-codex-lore-block {
+  display: grid;
+  gap: 14px;
+}
+
+.world-codex-lore-block h2 {
+  font-size: 26px;
+  text-transform: uppercase;
+}
+
+.world-codex-detail-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 84px));
+  gap: 14px;
+}
+
+.world-codex-detail-tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 8px;
+  min-height: 98px;
+  padding: 10px 8px;
+  border: 1px solid rgba(201, 164, 77, 0.22);
+  background: rgba(7, 10, 11, 0.44);
+  text-align: center;
+}
+
+.world-codex-detail-tile img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.world-codex-detail-tile p {
+  display: none;
+  margin: 4px 0 0;
+  color: var(--wc-muted);
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-detail-tile:hover p {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 6;
+  width: 240px;
+  display: block;
+  transform: translateX(-50%);
+  padding: 9px 10px;
+  border: 1px solid var(--wc-border);
+  background: rgba(7, 6, 5, 0.98);
+  color: var(--wc-ink);
+  text-align: left;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.46);
+}
+
+.world-codex-detail-tile .world-codex-tile-actions {
+  justify-content: center;
+}
+
+.world-codex-empty-small {
+  margin: 6px 0;
+  color: rgba(167, 157, 138, 0.68);
+  font-size: 12px;
+}
+
+.world-codex-empty-state {
+  height: 100%;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 16px;
+  color: var(--wc-muted);
+  text-align: center;
+}
+
+.world-codex-empty-state img {
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  opacity: 0.75;
+}
+
+.world-codex-recipe-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 18px;
+}
+
+.world-codex-recipe-art {
+  min-height: 260px;
+  max-height: 340px;
+}
+
+.world-codex-recipe-side {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.world-codex-result-tile {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgba(201, 164, 77, 0.24);
+  background: rgba(0, 0, 0, 0.24);
+  text-align: center;
+}
+
+.world-codex-result-tile img {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+}
+
+.world-codex-editor-window .window-content {
+  overflow: hidden;
+}
+
+.world-codex-editor-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  overflow: auto;
+}
+
+.world-codex-editor-header {
+  position: sticky;
+  top: -14px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--wc-border);
+  background: rgba(13, 11, 9, 0.96);
+}
+
+.world-codex-editor-section {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(201, 164, 77, 0.22);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.world-codex-editor-form label {
+  display: grid;
+  gap: 5px;
+}
+
+.world-codex-editor-form label span {
+  color: var(--wc-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.world-codex-editor-form input[type="text"],
+.world-codex-editor-form textarea,
+.world-codex-editor-form select {
+  width: 100%;
+  border: 1px solid rgba(201, 164, 77, 0.24);
+  color: var(--wc-ink);
+  background: rgba(5, 5, 5, 0.54);
+}
+
+.world-codex-editor-form textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.world-codex-field-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 32px;
+  gap: 10px;
+}
+
+.world-codex-image-preview {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border: 1px solid rgba(201, 164, 77, 0.2);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.world-codex-toggle {
+  display: inline-flex !important;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+}
+
+.world-codex-toggle input {
+  width: 16px;
+  height: 16px;
+}
+
+.world-codex-nested-editor {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(201, 164, 77, 0.18);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.world-codex-nested-heading {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.world-codex-species-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  gap: 10px;
+  align-items: end;
+}
+
+.world-codex-reorder-buttons {
+  display: grid;
+  gap: 4px;
+}
+
+.world-codex-mini-button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+@media (max-width: 1100px) {
+  .world-codex-bestiary-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .world-codex-right-panel {
+    grid-column: 1 / -1;
+    grid-template-rows: auto;
+  }
+
+  .world-codex-recipes-layout,
+  .world-codex-recipe-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cohesive bestiary presentation: one overlay, subtle separators, no nested popup clipping. */
+.world-codex-window .window-content {
+  background:
+    linear-gradient(90deg, rgba(3, 7, 8, 0.98), rgba(12, 13, 12, 0.88) 38%, rgba(5, 5, 5, 0.98)),
+    repeating-linear-gradient(90deg, rgba(140, 160, 150, 0.07) 0 1px, transparent 1px 96px),
+    #070707;
+}
+
+.world-codex-shell {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.62), transparent 120px),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.48), transparent 180px);
+}
+
+.world-codex-window.world-codex-mode-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  transform: none !important;
+  z-index: var(--z-index-window, 100) !important;
+}
+
+.world-codex-window.world-codex-mode-overlay > .window-header {
+  display: none;
+}
+
+.world-codex-window.world-codex-mode-overlay .window-content {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+}
+
+.world-codex-window.world-codex-mode-overlay .window-resizable-handle,
+.world-codex-window.world-codex-mode-overlay .window-resize-handle {
+  display: none;
+}
+
+.world-codex-window.world-codex-mode-overlay .world-codex-shell {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.world-codex-window.world-codex-mode-window .world-codex-mode-controls [data-action="close-codex"] {
+  display: none;
+}
+
+.world-codex-editor-window {
+  z-index: calc(var(--z-index-window, 100) + 20) !important;
+}
+
+.world-codex-header {
+  min-height: 76px;
+  padding: 14px 28px;
+  border-bottom-color: rgba(201, 164, 77, 0.28);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.24));
+}
+
+.world-codex-title-block h1 {
+  font-size: 19px;
+}
+
+.world-codex-tabs {
+  margin-left: auto;
+}
+
+.world-codex-tab {
+  min-width: 128px;
+  background: rgba(7, 8, 8, 0.50);
+}
+
+.world-codex-tab.world-codex-is-active {
+  background: rgba(92, 70, 34, 0.68);
+}
+
+.world-codex-body {
+  height: 100%;
+  padding: 18px 28px 26px;
+  gap: 0;
+}
+
+.world-codex-bestiary-layout {
+  grid-template-columns: 360px minmax(560px, 1fr) 410px;
+}
+
+.world-codex-panel {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.world-codex-left-panel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  border-right: 1px solid rgba(201, 164, 77, 0.22);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.12));
+  overflow: hidden;
+}
+
+.world-codex-right-panel {
+  border-left: 1px solid rgba(201, 164, 77, 0.18);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.54));
+  overflow-y: auto;
+}
+
+.world-codex-main-panel {
+  padding: 12px 28px 18px;
+  background: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.world-codex-main-panel::before {
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.48), transparent 20%, transparent 78%, rgba(0, 0, 0, 0.50)),
+    linear-gradient(180deg, rgba(201, 164, 77, 0.025), transparent 30%, rgba(0, 0, 0, 0.34));
+}
+
+.world-codex-stage-actions {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 4;
+}
+
+.world-codex-panel-heading {
+  padding: 20px 20px 16px;
+  border-bottom-color: rgba(201, 164, 77, 0.18);
+  background: transparent;
+}
+
+.world-codex-panel-heading h2 {
+  font-size: 24px;
+}
+
+.world-codex-list {
+  padding: 14px 20px 22px;
+}
+
+.world-codex-list-entry {
+  border: 1px solid transparent;
+  border-bottom-color: rgba(201, 164, 77, 0.13);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.world-codex-list-entry:hover,
+.world-codex-list-entry.world-codex-is-selected {
+  border-color: rgba(201, 164, 77, 0.78);
+  background: rgba(35, 44, 43, 0.45);
+}
+
+.world-codex-creature-art {
+  min-height: clamp(420px, 58vh, 560px);
+  max-height: none;
+  background: transparent;
+}
+
+.world-codex-creature-art img {
+  max-height: clamp(420px, 58vh, 560px);
+  padding: 4px 12px 0;
+}
+
+.world-codex-main-panel > .world-codex-section {
+  align-self: center;
+  width: min(520px, 100%);
+  margin-top: -4px;
+}
+
+.world-codex-section-heading {
+  min-height: 22px;
+}
+
+.world-codex-tile-grid,
+.world-codex-detail-list {
+  grid-template-columns: repeat(auto-fill, 82px);
+}
+
+.world-codex-tile,
+.world-codex-detail-tile,
+.world-codex-result-tile {
+  border-color: rgba(201, 164, 77, 0.20);
+  background: rgba(3, 6, 7, 0.36);
+}
+
+.world-codex-tile {
+  min-height: 98px;
+  padding-bottom: 10px;
+}
+
+.world-codex-tile-actions {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: auto;
+  margin: 0;
+  opacity: 0.18;
+  transition: opacity 140ms ease;
+}
+
+.world-codex-tile:hover .world-codex-tile-actions,
+.world-codex-detail-tile:hover .world-codex-tile-actions {
+  opacity: 1;
+}
+
+.world-codex-gm-view .world-codex-tile-actions {
+  opacity: 0.82;
+}
+
+.world-codex-mini-button {
+  width: 22px;
+  height: 22px;
+  background: rgba(3, 3, 3, 0.64);
+}
+
+.world-codex-right-panel {
+  gap: 30px;
+  padding: 84px 30px 28px;
+}
+
+.world-codex-lore-block {
+  gap: 12px;
+}
+
+.world-codex-lore-block h2 {
+  font-size: 25px;
+  line-height: 1.18;
+}
+
+.world-codex-description {
+  max-width: 34em;
+  color: #e6dcc8;
+}
+
+.world-codex-detail-tile {
+  min-height: 92px;
+}
+
+.world-codex-detail-tile p,
+.world-codex-detail-tile:hover p {
+  display: none;
+}
+
+.world-codex-system-stage {
+  width: min(920px, 100%);
+  display: grid;
+  gap: 12px;
+  align-self: center;
+  margin: -8px auto 2px;
+  padding: 0 6px;
+}
+
+.world-codex-system-stage > .world-codex-section-heading {
+  justify-content: center;
+  gap: 9px;
+}
+
+.world-codex-system-stage .world-codex-section-heading i {
+  color: var(--wc-gold);
+  font-size: 13px;
+}
+
+.world-codex-system-stage .world-codex-system-section-list {
+  display: grid;
+  gap: 12px;
+}
+
+.world-codex-system-stage .world-codex-system-section {
+  display: grid;
+  gap: 9px;
+  padding: 10px 12px 12px;
+  border: 1px solid rgba(201, 164, 77, 0.18);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.20) 46%, rgba(0, 0, 0, 0.52)),
+    rgba(8, 8, 7, 0.34);
+}
+
+.world-codex-system-stage .world-codex-system-section.world-codex-is-unrevealed {
+  border-color: rgba(185, 74, 72, 0.28);
+}
+
+.world-codex-system-stage .world-codex-system-section header {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.world-codex-system-stage .world-codex-system-section header > strong {
+  flex: 1;
+  color: var(--wc-gold);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.world-codex-reveal-count {
+  color: rgba(167, 157, 138, 0.72);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.world-codex-system-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: 8px;
+}
+
+.world-codex-system-card {
+  position: relative;
+  min-height: 92px;
+  display: grid;
+  grid-template-rows: 34px auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+  padding: 9px 7px 8px;
+  border: 1px solid rgba(201, 164, 77, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+    rgba(2, 5, 6, 0.46);
+  text-align: center;
+}
+
+.world-codex-system-card.world-codex-is-unrevealed {
+  border-color: rgba(185, 74, 72, 0.30);
+}
+
+.world-codex-system-card.world-codex-is-hidden {
+  filter: grayscale(0.88);
+  opacity: 0.72;
+}
+
+.world-codex-system-card img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55));
+}
+
+.world-codex-system-card-icon-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+
+.world-codex-system-card .world-codex-system-card-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.world-codex-system-card .world-codex-affinity-state-icon {
+  position: absolute;
+  right: -9px;
+  bottom: -5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.82);
+  box-shadow: 0 0 0 1px rgba(201, 164, 77, 0.20), 0 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.world-codex-system-card .world-codex-affinity-state-neutral {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.world-codex-system-card .world-codex-affinity-state-vulnerable,
+.world-codex-system-card .world-codex-affinity-state-absorption {
+  box-shadow: 0 0 0 1px rgba(215, 74, 67, 0.52), 0 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.world-codex-system-card .world-codex-affinity-state-resistant {
+  box-shadow: 0 0 0 1px rgba(103, 184, 93, 0.52), 0 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.world-codex-system-card .world-codex-affinity-value-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.70);
+  box-shadow: 0 0 0 1px rgba(201, 164, 77, 0.16), 0 4px 10px rgba(0, 0, 0, 0.50);
+}
+
+.world-codex-system-card span {
+  color: var(--wc-muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.world-codex-system-card strong {
+  max-width: 100%;
+  color: var(--wc-ink);
+  font-size: 14px;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.world-codex-system-card-attribute strong {
+  color: #f0d27b;
+}
+
+.world-codex-system-card-affinity strong {
+  color: #cfe7de;
+}
+
+.world-codex-system-card .world-codex-mini-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  opacity: 0.72;
+}
+
+.world-codex-system-card:hover .world-codex-mini-button {
+  opacity: 1;
+}
+
+.world-codex-system-card .world-codex-mini-button img {
+  width: 14px;
+  height: 14px;
+}

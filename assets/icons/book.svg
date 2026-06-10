@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Book">
+  <path d="M10 12c0-4 3-7 7-7h32c3 0 5 2 5 5v44c0 3-2 5-5 5H17c-4 0-7-3-7-7V12Z" fill="#17130f" stroke="#c9a44d" stroke-width="4"/>
+  <path d="M18 6v52M25 17h19M25 28h19M25 39h14" stroke="#c9a44d" stroke-linecap="round" stroke-width="4"/>
+</svg>

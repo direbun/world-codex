@@ -1,0 +1,210 @@
+<form class="world-codex-editor-form">
+  <header class="world-codex-editor-header">
+    <h2>{{#if isNew}}{{localize "WORLD_CODEX.AddCreature"}}{{else}}{{localize "WORLD_CODEX.EditCreature"}}{{/if}}</h2>
+    <div class="world-codex-action-row">
+      {{#unless isNew}}
+        <button type="button" class="world-codex-button world-codex-is-danger" data-action="delete-creature">{{localize "WORLD_CODEX.Delete"}}</button>
+      {{/unless}}
+      <button type="submit" class="world-codex-button">{{localize "WORLD_CODEX.Save"}}</button>
+    </div>
+  </header>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <h3>{{localize "WORLD_CODEX.ActorLink.Title"}}</h3>
+    </div>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.SystemProfile.Label"}}</span>
+      <input type="text" value="{{systemProfileLabel}}" readonly />
+    </label>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.ActorLink.Actor"}}</span>
+      <select name="actorUuid">
+        {{#each actorOptions}}
+          <option value="{{uuid}}" {{#if selected}}selected{{/if}}>{{name}}{{#if type}} ({{type}}){{/if}}</option>
+        {{/each}}
+      </select>
+    </label>
+
+    <div class="world-codex-action-row">
+      <button type="button" class="world-codex-button" data-action="import-actor">{{localize "WORLD_CODEX.Actions.ImportActor"}}</button>
+      {{#if hasActorLink}}
+        <span class="world-codex-editor-note">{{localize "WORLD_CODEX.ActorLink.Linked"}}: {{creature.actorName}}</span>
+      {{/if}}
+      {{#if systemSectionCount}}
+        <span class="world-codex-editor-note">{{localize "WORLD_CODEX.ActorLink.SectionsImported"}}: {{systemSectionCount}}</span>
+      {{/if}}
+    </div>
+  </section>
+
+  <section class="world-codex-editor-section">
+    <label>
+      <span>{{localize "WORLD_CODEX.Name"}}</span>
+      <input type="text" name="name" value="{{creature.name}}" />
+    </label>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.Species"}}</span>
+      <select name="species">
+        {{#each speciesOptions}}
+          <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+        {{/each}}
+      </select>
+    </label>
+
+    <label class="world-codex-toggle">
+      <input type="checkbox" name="revealed" {{#if creature.revealed}}checked{{/if}} />
+      <span>{{localize "WORLD_CODEX.RevealedToPlayers"}}</span>
+    </label>
+
+    <div class="world-codex-field-row">
+      <img class="world-codex-image-preview" src="{{creature.image}}" alt="" />
+      <label>
+        <span>{{localize "WORLD_CODEX.Image"}}</span>
+        <input type="text" name="image" value="{{creature.image}}" />
+      </label>
+      <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="image" data-tooltip="{{localize "WORLD_CODEX.Actions.PickImage"}}">
+        <img src="{{icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+      </button>
+    </div>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.Description"}}</span>
+      <textarea name="description" rows="5">{{creature.description}}</textarea>
+    </label>
+
+    <label>
+      <span>{{localize "WORLD_CODEX.GmNotes"}}</span>
+      <textarea name="gmNotes" rows="4">{{creature.gmNotes}}</textarea>
+    </label>
+  </section>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <img src="{{icons.LOOT}}" alt="" />
+      <h3>{{localize "WORLD_CODEX.Loot"}}</h3>
+      <button type="button" class="world-codex-icon-button" data-action="add-loot" data-tooltip="{{localize "WORLD_CODEX.Actions.AddLoot"}}">
+        <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.Actions.AddLoot"}}" />
+      </button>
+    </div>
+
+    {{#each loot}}
+      <article class="world-codex-nested-editor">
+        <div class="world-codex-nested-heading">
+          <strong>{{localize "WORLD_CODEX.Loot"}}</strong>
+          <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-loot" data-item-id="{{id}}">
+            <img src="{{../icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Name"}}</span>
+          <input type="text" name="loot.{{id}}.name" value="{{name}}" />
+        </label>
+        <div class="world-codex-field-row">
+          <img class="world-codex-image-preview" src="{{image}}" alt="" />
+          <label>
+            <span>{{localize "WORLD_CODEX.Image"}}</span>
+            <input type="text" name="loot.{{id}}.image" value="{{image}}" />
+          </label>
+          <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="loot.{{id}}.image">
+            <img src="{{../icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Description"}}</span>
+          <textarea name="loot.{{id}}.description" rows="3">{{description}}</textarea>
+        </label>
+        <label class="world-codex-toggle">
+          <input type="checkbox" name="loot.{{id}}.revealed" {{#if revealed}}checked{{/if}} />
+          <span>{{localize "WORLD_CODEX.Revealed"}}</span>
+        </label>
+      </article>
+    {{/each}}
+  </section>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <img src="{{icons.WEAKNESS}}" alt="" />
+      <h3>{{localize "WORLD_CODEX.Weaknesses"}}</h3>
+      <button type="button" class="world-codex-icon-button" data-action="add-weakness" data-tooltip="{{localize "WORLD_CODEX.Actions.AddWeakness"}}">
+        <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.Actions.AddWeakness"}}" />
+      </button>
+    </div>
+    {{#each weaknesses}}
+      <article class="world-codex-nested-editor">
+        <div class="world-codex-nested-heading">
+          <strong>{{localize "WORLD_CODEX.Weaknesses"}}</strong>
+          <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-trait" data-item-id="{{id}}">
+            <img src="{{../icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Name"}}</span>
+          <input type="text" name="traits.{{id}}.name" value="{{name}}" />
+        </label>
+        <div class="world-codex-field-row">
+          <img class="world-codex-image-preview" src="{{image}}" alt="" />
+          <label>
+            <span>{{localize "WORLD_CODEX.Image"}}</span>
+            <input type="text" name="traits.{{id}}.image" value="{{image}}" />
+          </label>
+          <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="traits.{{id}}.image">
+            <img src="{{../icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Description"}}</span>
+          <textarea name="traits.{{id}}.description" rows="3">{{description}}</textarea>
+        </label>
+        <label class="world-codex-toggle">
+          <input type="checkbox" name="traits.{{id}}.revealed" {{#if revealed}}checked{{/if}} />
+          <span>{{localize "WORLD_CODEX.Revealed"}}</span>
+        </label>
+      </article>
+    {{/each}}
+  </section>
+
+  <section class="world-codex-editor-section">
+    <div class="world-codex-section-heading">
+      <img src="{{icons.STRENGTH}}" alt="" />
+      <h3>{{localize "WORLD_CODEX.Strengths"}}</h3>
+      <button type="button" class="world-codex-icon-button" data-action="add-strength" data-tooltip="{{localize "WORLD_CODEX.Actions.AddStrength"}}">
+        <img src="{{icons.PLUS}}" alt="{{localize "WORLD_CODEX.Actions.AddStrength"}}" />
+      </button>
+    </div>
+    {{#each strengths}}
+      <article class="world-codex-nested-editor">
+        <div class="world-codex-nested-heading">
+          <strong>{{localize "WORLD_CODEX.Strengths"}}</strong>
+          <button type="button" class="world-codex-mini-button world-codex-is-danger" data-action="delete-trait" data-item-id="{{id}}">
+            <img src="{{../icons.TRASH}}" alt="{{localize "WORLD_CODEX.Delete"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Name"}}</span>
+          <input type="text" name="traits.{{id}}.name" value="{{name}}" />
+        </label>
+        <div class="world-codex-field-row">
+          <img class="world-codex-image-preview" src="{{image}}" alt="" />
+          <label>
+            <span>{{localize "WORLD_CODEX.Image"}}</span>
+            <input type="text" name="traits.{{id}}.image" value="{{image}}" />
+          </label>
+          <button type="button" class="world-codex-icon-button" data-action="pick-image" data-target="traits.{{id}}.image">
+            <img src="{{../icons.EYE_OPEN}}" alt="{{localize "WORLD_CODEX.Actions.PickImage"}}" />
+          </button>
+        </div>
+        <label>
+          <span>{{localize "WORLD_CODEX.Description"}}</span>
+          <textarea name="traits.{{id}}.description" rows="3">{{description}}</textarea>
+        </label>
+        <label class="world-codex-toggle">
+          <input type="checkbox" name="traits.{{id}}.revealed" {{#if revealed}}checked{{/if}} />
+          <span>{{localize "WORLD_CODEX.Revealed"}}</span>
+        </label>
+      </article>
+    {{/each}}
+  </section>
+</form>
